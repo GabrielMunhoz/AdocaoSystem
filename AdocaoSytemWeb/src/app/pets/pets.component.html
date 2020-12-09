@@ -1,0 +1,43 @@
+<div class="container">
+    <h3 class="mb2">Informações Pets</h3>
+
+    <a name="petsNew" id="petsNew" class="btn btn-success" [routerLink]="['/pets/inserir']" routerLinkActive="router-link-active"  role="button">Inserir Novo</a>
+
+    <table class="table table-light mt-2">
+        <thead class="thead-light">
+            <tr>
+                <th class="scope">_id</th>
+                <th class="scope">APELIDO</th>
+                <th class="scope">ESPECIE</th>
+                <th class="scope">RACA</th>
+                <th class="scope">PORTE</th>
+                <th class="scope">IDADE</th>
+                <th class="scope">GENERO</th>
+                <th class="scope">AÇOES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let pet of pets">
+                <td>{{pet._id}}</td>
+                <td>{{pet.apelido}}</td>
+                <td>{{pet.especie}}</td>
+                <td>{{pet.raca}}</td>
+                <td>{{pet.porte}}</td>
+                <td>{{pet.idade}}</td>
+                <td>{{pet.genero}}</td>
+                <td>
+                    <a class="btn btn-primary mr-2" [routerLink]="[ '/pets/edit', pet._id ]" role="button">Editar</a>
+    
+                    <button type="button" class="btn btn-danger" (click)="deletarPet(pet._id)">Excluir</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+<div *ngIf="mensagem" class="alert alert-info" role="alert">
+  <h4 class="alert-heading">Mensagem</h4>
+  <p>{{mensagem}}</p>
+  <p class="mb-0"></p>
+</div>
+
+</div>

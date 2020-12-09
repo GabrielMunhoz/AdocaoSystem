@@ -1,4 +1,5 @@
 const express = require('express')
+var cors = require('cors')
 const app = express()
 const mongoose = require('mongoose')
 const port = 3000
@@ -21,6 +22,8 @@ exports.verifyJWT = (req, res, next) => {
 const rotaPessoa = require('./Routes/pessoaRouter');
 const rotaPets = require('./Routes/petsRouter');
 
+
+app.use(cors());
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 

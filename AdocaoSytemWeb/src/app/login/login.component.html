@@ -1,0 +1,14 @@
+<div class="container">
+    <div class="login">
+        <h2 class="h2" >Adoção System</h2>
+        <form method="post">
+            <div class="form-group mb2">
+                <input placeholder="Usuario" id="Usuario" [(ngModel)]="usuario.usuario" class="form-control" type="text" name="usuario">
+            </div>
+        </form>
+        <div class="form-group mb2">
+            <input placeholder="Senha" id="senha" [(ngModel)]="usuario.senha" class="form-control" type="password" name="senha">
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="login()">Login</button>
+    </div>
+</div>

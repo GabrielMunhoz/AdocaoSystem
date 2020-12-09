@@ -139,14 +139,12 @@ exports.deletar =  (req, res) => {
                 res.status(500).json({err : err, message: "Falha ao realizar o login"});
             }
             const result = bcrypt.compareSync(parasenha, pessoa.senha);
-            console.log('result' +result);
             if(result){
-                console.log(pessoa);
                 const id = pessoa.id; 
                 const role = pessoa.role; 
                 let token = jwt.sign({id}, process.env.SECRET, { expiresIn: 300})
 
-                res.json({auth: true, token : token, role: role});
+                res.json({auth: true, token : token, role: role, idPessoa: pessoa.id});
             }else  
             {
                 res.json({auth: false, token : null, message: 'erro ao validar a senha'});
