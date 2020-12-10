@@ -2,12 +2,33 @@ const endereco = require('../Model/endereco');
 const jwt = require('jsonwebtoken');
 
 
+//Teste
+const { roles } = require('../utils/roles');
+
+exports.grantAccess = function (action, resource) {
+    return async (req, res, next) => {
+        try {
+            const permission = roles.can(req.headers['role'])[action](resource);
+            if (!permission.granted) {
+                return res.status(401).json({
+                    error: "Você não tem permissão para executar está ação"
+                });
+            }
+            next()
+        } catch (error) {
+            res.status(401).json("Algo deu errado na role")
+        }
+    }
+}
+
 exports.listar = (req,res) => {
-    endereco.find({}, (err, enderecos) =>{
+    console.log("Cheguei aqui")
+    endereco.find({} , (err, end) =>{
         if (err){
+            console.log(err)
             res.status(500).send(err);
         }
-        res.json(enderecos);
+        res.json(end);
     });
     // res.json({id: 1, nome: 'gabriel', years : 21})
 }
@@ -35,9 +56,6 @@ exports.atualizar = (req, res) => {
         res.json(endereco);
     });
 }
-
-
-
 
 exports.listarId = (req, res) => {
     let id = req.params.id;

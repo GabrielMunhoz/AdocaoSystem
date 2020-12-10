@@ -5,10 +5,12 @@ exports.roles = (function() {
 ac.grant("basic")
  .readOwn("pessoa")
  .createOwn("pessoa")
+ .readAny("pets")
  .updateOwn("pessoa")
  .readOwn("endereco")
  .createOwn("endereco")
  .updateOwn("endereco")
+ 
  
 ac.grant("admin")
  .extend("basic")
@@ -22,6 +24,13 @@ ac.grant("admin")
  .deleteAny("pets")
  .readAny("endereco")
  .updateAny("endereco")
+ .createAny("endereco")
  .deleteAny("endereco")
+ .createAny("adocao")
+ .readAny("adocao")
+ .updateAny("adocao")
+ .deleteAny("adocao")
+ .createAny("adocao")
+
 return ac;
 })();

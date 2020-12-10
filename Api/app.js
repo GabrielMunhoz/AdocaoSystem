@@ -21,6 +21,7 @@ exports.verifyJWT = (req, res, next) => {
 
 const rotaPessoa = require('./Routes/pessoaRouter');
 const rotaPets = require('./Routes/petsRouter');
+const rotaAdocao = require('./Routes/adocaoRouter');
 
 
 app.use(cors());
@@ -55,6 +56,7 @@ app.use((req,res,next) => {
 
 app.use('/api/pessoa',rotaPessoa);
 app.use('/api/pets',rotaPets);
+app.use('/api/adocao',rotaAdocao)
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)

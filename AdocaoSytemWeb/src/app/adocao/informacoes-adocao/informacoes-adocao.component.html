@@ -1,0 +1,48 @@
+<div class="container">
+    <h3 class="mb2">Informações Adocões</h3>
+
+    <!-- <a name="petsNew" id="petsNew" class="btn btn-success" [routerLink]="['/pets/inserir']" routerLinkActive="router-link-active"  role="button">Inserir Novo</a> -->
+
+    <table class="table table-light mt-2">
+        <thead class="thead-light">
+            <tr>
+                <!-- <th class="scope">_id</th> -->
+                <th class="scope">DATA/HORA</th>
+                <th class="scope">NOME</th>
+                <th class="scope">SOBRENOME</th>
+                <th class="scope">CPF</th>
+                <th class="scope">EMAIL</th>
+                <th class="scope">TELEFONE</th>
+                <th class="scope">APELIDO</th>
+                <th class="scope">RACA</th>
+                <th class="scope">AÇOES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let adocao of adocoes">
+                <!-- <td>{{pet._id}}</td> -->
+                <td>{{adocao.datahora | date:"dd/MM/yy - HH:mm:ss" }}</td>
+                <td>{{adocao.Pessoa.nome}}</td>
+                <td>{{adocao.Pessoa.sobrenome}}</td>
+                <td>{{adocao.Pessoa.cpf}}</td>
+                <td>{{adocao.Pessoa.email}}</td>
+                <td>{{adocao.Pessoa.telefone}}</td>
+                <td>{{adocao.Pet.apelido}}</td>
+                <td>{{adocao.Pet.raca}}</td>
+                
+                <td>
+                    <!-- <a class="btn btn-primary mr-2 mb2" [routerLink]="[ '/pets/edit', pet._id ]" role="button">Editar</a> -->
+    
+                    <button type="button" class="btn btn-danger" (click)="deletarAdocao(adocao._id)">Excluir</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+<div *ngIf="mensagem" class="alert alert-info" role="alert">
+  <h4 class="alert-heading">Mensagem</h4>
+  <p>{{mensagem}}</p>
+  <p class="mb-0"></p>
+</div>
+
+</div>

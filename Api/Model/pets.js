@@ -11,6 +11,7 @@ const petsSchema = new mongoose.Schema({
     porte: String,
     idade: Number,
     genero: String,
+    adotado : false,
     dadosPet: { type: Schema.Types.ObjectId, ref: 'DadosPets' }
 },
     {

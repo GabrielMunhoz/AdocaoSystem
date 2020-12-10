@@ -7,4 +7,12 @@ export class pets{
     idade: Number;
     genero: String;
     dadosPet: string;
+    adotado: boolean;
+
+    /**
+     *
+     */
+    constructor() {
+        this.adotado = false;
+    }
 }

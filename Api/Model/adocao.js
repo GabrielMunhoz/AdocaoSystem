@@ -6,8 +6,8 @@ mongoose.Promise = global.Promise;
 
 const AdocaoSchema = new mongoose.Schema({
     datahora: Date,
-    pet: { type: Schema.Types.ObjectId, ref: 'Pets' },
-    adotante: { type: Schema.Types.ObjectId, ref: 'Pessoa' }
+    Pet: { type: Schema.Types.ObjectId, ref: 'Pets' },
+    Pessoa: { type: Schema.Types.ObjectId, ref: 'Pessoa' }
 },
     {
         versionKey: false

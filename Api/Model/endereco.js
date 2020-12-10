@@ -1,10 +1,10 @@
 const mongoose = require(`mongoose`);
 
-var schema = mongoose.schema;
+var Schema = mongoose.Schema;
 
 mongoose.Promise = global.Promise;
 
-const enderecoSchema = new mongoose.Schema({
+const dadosAdotantes = new mongoose.Schema({
     rua: String,
     numero: Number,
     bairro: String,
@@ -17,4 +17,4 @@ const enderecoSchema = new mongoose.Schema({
     }
 );
 
-module.exports = mongoose.model("Endereco", enderecoSchema);
+module.exports = mongoose.model('Enderecos', dadosAdotantes);

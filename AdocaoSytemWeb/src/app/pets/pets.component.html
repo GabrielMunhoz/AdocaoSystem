@@ -6,7 +6,6 @@
     <table class="table table-light mt-2">
         <thead class="thead-light">
             <tr>
-                <th class="scope">_id</th>
                 <th class="scope">APELIDO</th>
                 <th class="scope">ESPECIE</th>
                 <th class="scope">RACA</th>
@@ -18,7 +17,6 @@
         </thead>
         <tbody>
             <tr *ngFor="let pet of pets">
-                <td>{{pet._id}}</td>
                 <td>{{pet.apelido}}</td>
                 <td>{{pet.especie}}</td>
                 <td>{{pet.raca}}</td>
@@ -26,7 +24,7 @@
                 <td>{{pet.idade}}</td>
                 <td>{{pet.genero}}</td>
                 <td>
-                    <a class="btn btn-primary mr-2" [routerLink]="[ '/pets/edit', pet._id ]" role="button">Editar</a>
+                    <a class="btn btn-primary mr-2 mb2" [routerLink]="[ '/pets/edit', pet._id ]" role="button">Editar</a>
     
                     <button type="button" class="btn btn-danger" (click)="deletarPet(pet._id)">Excluir</button>
                 </td>

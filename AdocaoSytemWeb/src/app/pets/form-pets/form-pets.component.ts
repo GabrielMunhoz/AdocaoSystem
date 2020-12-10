@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/Service/auth.service';
 import { PetsService } from 'src/app/Service/pets.service';
 import { pets } from 'src/model/pets';
 import { PetsComponent } from '../pets.component';
@@ -15,7 +16,9 @@ export class FormPetsComponent implements OnInit {
   id: string;
   pet = new pets();
 
-  constructor(private petService: PetsService,
+  constructor(
+    private petService: PetsService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
   ) { }
@@ -31,7 +34,12 @@ export class FormPetsComponent implements OnInit {
   }
 
   preenchePet(id: string) {
-    this.petService.BuscarPorId(this.id).subscribe(dado => this.pet = dado);
+    this.petService.BuscarPorId(this.id).subscribe(dado => this.pet = dado, 
+      err => {
+      if(err.status == 401){
+        this.authService.logout();
+      }
+    });
   }
 
   cadastrar(_id: string) {
@@ -42,6 +50,9 @@ export class FormPetsComponent implements OnInit {
         },
         err=> {
           this.mensagem = this.pet.apelido + 'Falha ao cadastrar';
+          if(err.status == 401){
+            this.authService.logout();
+          }
         });
       this.pet = new pets();
     } else {
@@ -50,6 +61,9 @@ export class FormPetsComponent implements OnInit {
       },
       err=> {
         this.mensagem = this.pet.apelido + 'Falha ao editar';
+        if(err.status == 401){
+          this.authService.logout();
+        }
       });
     }
   }

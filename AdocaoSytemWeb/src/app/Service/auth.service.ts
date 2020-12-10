@@ -73,8 +73,7 @@ export class AuthService {
 
     isAdmin() : boolean{
         if(this.getDadosConexao()){
-            this.dadosConexao.role == 'admin'
-            return true;
+            if(this.dadosConexao.role == 'admin') return  true;
         }
         else{
             return false;

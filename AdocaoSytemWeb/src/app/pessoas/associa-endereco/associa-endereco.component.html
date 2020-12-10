@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="form-group">
+        <label for="endereco">Endereco</label>
+        <select class="form-control" name="endereco" id="endereco" [(ngModel)]="endereco._id">
+          <option *ngFor="let end of enderecos" value="{{end._id}}">Rua: {{end.rua}},&nbsp;{{end.numero}}&nbsp; - &nbsp;{{end.bairro}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="pessoa">Pessoa</label>
+        <select class="form-control" name="pessoa" id="pessoa" [(ngModel)]="pessoa._id"> 
+            <option *ngFor="let p of pessoas" value="{{p._id}}">Nome: {{p.nome}}, &nbsp; {{p.sobrenome}}</option>
+        </select>
+      </div>
+
+      <a name="associar" id="associar" class="btn btn-primary" (click)="associar()" role="button">Associar</a>
+</div>

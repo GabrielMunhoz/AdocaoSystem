@@ -10,23 +10,23 @@ const someOtrherPlainTextPassword = 'not_bacon';
 
 //Teste
 const { roles } = require('../utils/roles');
- 
-exports.grantAccess = function(action, resource) {
- return async (req, res, next) => {
-  try {
-   const permission = roles.can(req.headers['role'])[action](resource);
-   if (!permission.granted) {
-    return res.status(401).json({
-     error: "Você não tem permissão para executar está ação"
-    });
-   }
-   next()
-  } catch (error) {
-    res.status(401).json("Algo deu errado na role")
+
+exports.grantAccess = function (action, resource) {
+    return async (req, res, next) => {
+        try {
+            const permission = roles.can(req.headers['role'])[action](resource);
+            if (!permission.granted) {
+                return res.status(401).json({
+                    error: "Você não tem permissão para executar está ação"
+                });
+            }
+            next()
+        } catch (error) {
+            res.status(401).json("Algo deu errado na role")
+        }
     }
- }
 }
- 
+
 // exports.allowIfLoggedin = async (req, res, next) => {
 //  try {
 //   const user = res.locals.loggedInUser;
@@ -47,9 +47,9 @@ exports.grantAccess = function(action, resource) {
 
 //teste
 
-exports.listar = (req,res) => {
-    pessoa.find({} , (err, pessoas) =>{
-        if (err){
+exports.listar = (req, res) => {
+    pessoa.find({}, (err, pessoas) => {
+        if (err) {
             res.status(500).send(err);
         }
         res.json(pessoas);
@@ -57,49 +57,50 @@ exports.listar = (req,res) => {
     // res.json({id: 1, nome: 'gabriel', years : 21})
 }
 
-exports.inserir = (req,res) => {
-    let novaPessoa = new pessoa(req.body);    
+exports.inserir = (req, res) => {
+    let novaPessoa = new pessoa(req.body);
     novaPessoa.role = req.body.role || 'basic';
+    let existe = false;
 
+    console.log(novaPessoa);
+
+    
     //codigo hash aqui
-    const salt  = bcrypt.genSaltSync(saltRounds);
+    const salt = bcrypt.genSaltSync(saltRounds);
     const hash = bcrypt.hashSync(novaPessoa.senha, salt);
     novaPessoa.senha = hash;
     //
 
-    let pDB = new pessoa();
+    pessoa.findOne({ usuario: novaPessoa.usuario }).exec((err, pessoa) => {
 
-    pessoa.findOne([usuario = novaPessoa.usuario], (err, pessoaBD) => {
-
-        pDB = pessoaBD;
-    })
-
-    console.log("Pessoa nova = " + pDB)
-    if(pDB != null){
-        return res.status(500).json( message = "Erro, Usuario já registrado. ")
-    }
-    else 
-     {
-        novaPessoa.save((err, pessoa) => {
-            if(err){
-                res.send(err);
-            }    
-            res.status(201).json(pessoa);
+        if (pessoa) {
             
-        });
-    }
+            return res.status(500).json(message = "Erro, Usuario já registrado. ")
+
+        } else {
+            novaPessoa.save((err, pessoa) => {
+                if (err) {
+                    res.send(err);
+                }
+                res.status(201).json(pessoa);
+
+            });
+        }
+        console.log(err);
+    });
+
 }
 
 exports.atualizar = (req, res) => {
     let id = req.params.id;
     let pessoaAtualizar = req.body;
 
-    const salt  = bcrypt.genSaltSync(saltRounds);
-    const hash = bcrypt.hashSync(pessoaAtualizar.senha, salt);
-    pessoaAtualizar.senha = hash;
+    // const salt = bcrypt.genSaltSync(saltRounds);
+    // const hash = bcrypt.hashSync(pessoaAtualizar.senha, salt);
+    // pessoaAtualizar.senha = hash;
 
     pessoa.findOneAndUpdate({ _id: id }, pessoaAtualizar, { new: true }, (err, pessoa) => {
-        if(err){
+        if (err) {
             res.send(err);
         }
         res.json(pessoa);
@@ -109,51 +110,50 @@ exports.atualizar = (req, res) => {
 exports.listarId = (req, res) => {
     let id = req.params.id;
     pessoa.findById(id).populate('dadosAdotante'). // only return the Persons name
-    exec((err, pessoa) => {
-        if(err)
-            res.status(500).send(err);        
-        res.json(pessoa);
-    });
+        exec((err, pessoa) => {
+            if (err)
+                res.status(500).send(err);
+            res.json(pessoa);
+        });
 }
 
-exports.deletar =  (req, res) => {
+exports.deletar = (req, res) => {
     let id = req.params.id;
     pessoa.findOneAndDelete({ _id: id }, (err, pessoaAtual) => {
-        if(err){
+        if (err) {
             res.send(err);
         }
         res.json(pessoaAtual);
     });
-  }
+}
 
-  exports.login = (req, res, next) => {
-    if (req.query && req.body.usuario && req.body.senha){
+exports.login = (req, res, next) => {
+    if (req.query && req.body.usuario && req.body.senha) {
         const parausername = req.body.usuario;
         const parasenha = req.body.senha;
         //
         const salt = bcrypt.genSaltSync(saltRounds);
 
-        pessoa.findOne({usuario: parausername}, (err, pessoa) => {
-            if(err){
+        pessoa.findOne({ usuario: parausername }, (err, pessoa) => {
+            if (err) {
                 console.log('erro');
-                res.status(500).json({err : err, message: "Falha ao realizar o login"});
+                res.status(500).json({ err: err, message: "Falha ao realizar o login" });
             }
             const result = bcrypt.compareSync(parasenha, pessoa.senha);
-            if(result){
-                const id = pessoa.id; 
-                const role = pessoa.role; 
-                let token = jwt.sign({id}, process.env.SECRET, { expiresIn: 300})
+            if (result) {
+                const id = pessoa.id;
+                const role = pessoa.role;
+                let token = jwt.sign({ id }, process.env.SECRET, { expiresIn: 300 })
 
-                res.json({auth: true, token : token, role: role, idPessoa: pessoa.id});
-            }else  
-            {
-                res.json({auth: false, token : null, message: 'erro ao validar a senha'});
-            } 
-            });
+                res.json({ auth: true, token: token, role: role, idPessoa: pessoa.id });
+            } else {
+                res.json({ auth: false, token: null, message: 'erro ao validar a senha' });
+            }
+        });
 
     }
 }
-exports.logout = (req,res,next) => {
-    res.json({auth: false, token : null});
+exports.logout = (req, res, next) => {
+    res.json({ auth: false, token: null });
 
 }

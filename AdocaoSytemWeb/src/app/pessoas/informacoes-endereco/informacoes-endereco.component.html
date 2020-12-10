@@ -1,0 +1,41 @@
+<div class="container">
+    <h3 class="mb2">Informações Endereço</h3>
+
+    <a name="enderecoNew" id="enderecoNew" class="btn btn-success" [routerLink]="['/pessoa/editar/endereco']" routerLinkActive="router-link-active"  role="button">Inserir Endereco</a>
+
+    <table class="table table-light mt-2">
+        <thead class="thead-light">
+            <tr>
+                <th class="scope">RUA</th>
+                <th class="scope">NUMERO</th>
+                <th class="scope">BAIRRO</th>
+                <th class="scope">CEP</th>
+                <th class="scope">CIDADE</th>
+                <th class="scope">COMPLEMENTO</th>
+                <th class="scope">AÇÕES</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let ende of enderecos">
+                <td>{{ende.rua}}</td>
+                <td>{{ende.numero}}</td>
+                <td>{{ende.bairro}}</td>
+                <td>{{ende.cep}}</td>
+                <td>{{ende.cidade}}</td>
+                <td>{{ende.complemento}}</td>
+                <td>
+                    <a class="btn btn-primary mr-2 mb2" [routerLink]="[ '/pessoa/editar/endereco/', ende._id ]" role="button">Editar</a>
+    
+                    <button type="button" class="btn btn-danger" (click)="deletarEndereco(ende._id)">Excluir</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+<div *ngIf="mensagem" class="alert alert-info" role="alert">
+  <h4 class="alert-heading">Mensagem</h4>
+  <p>{{mensagem}}</p>
+  <p class="mb-0"></p>
+</div>
+
+</div>

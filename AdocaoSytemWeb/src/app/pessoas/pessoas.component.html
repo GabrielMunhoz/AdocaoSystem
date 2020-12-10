@@ -1,0 +1,48 @@
+<div class="container">
+    <h3 class="mb2">Informações Pessoas</h3>
+
+    <a name="pessoaNew" id="pessoaNew" class="btn btn-success mr-2" [routerLink]="['/pessoa/inserir']" routerLinkActive="router-link-active"  role="button">Inserir Novo</a>
+    <a name="enderecoNew" id="enderecoNew" class="btn btn-success mr-2" [routerLink]="['/pessoa/editar/endereco/']" routerLinkActive="router-link-active"  role="button">Inserir Endereco</a>
+    <a name="enderecoAssociar" id="enderecoAssociar" class="btn btn-primary " [routerLink]="['/pessoa/associar/endereco/']" routerLinkActive="router-link-active"  role="button">Associar Endereço</a>
+
+    <table class="table table-light mt-2">
+        <thead class="thead-light">
+            <tr>
+                <th class="scope">NOME</th>
+                <th class="scope">SOBRENOME</th>
+                <th class="scope">CPF</th>
+                <th class="scope">EMAIL</th>
+                <th class="scope">FONE</th>
+                <th class="scope">USUARIO</th>
+                <th class="scope">ENDEREÇO</th>
+                <th class="scope">AÇÕES</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users">
+                <td>{{user.nome}}</td>
+                <td>{{user.sobrenome}}</td>
+                <td>{{user.cpf}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.fone}}</td>
+                <td>{{user.usuario}}</td>
+                <td>
+                    <a name="" id="" class="btn btn-primary" [routerLink]="[ '/pessoa/editar/endereco/',user.endereco ]" role="button">Endereco</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary mr-2 mb2" [routerLink]="[ '/pessoa/edit/', user._id ]" role="button">Editar</a>
+    
+                    <button type="button" class="btn btn-danger" (click)="deletarPet(user._id)">Excluir</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+<div *ngIf="mensagem" class="alert alert-info" role="alert">
+  <h4 class="alert-heading">Mensagem</h4>
+  <p>{{mensagem}}</p>
+  <p class="mb-0"></p>
+</div>
+
+</div>

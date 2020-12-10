@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row mb-2" style="border: lightblue;">
+        <div class="col-md-6"><img src="https://veja.abril.com.br/wp-content/uploads/2016/05/gato-fofo-20142401-original1.jpeg?quality=70&strip=info&resize=680,453" style="width:200px; height:200px;" /></div>
+        <div class="col-md-6">
+            <div class="row mb-4" style="color:#666">
+                <h1 class="h4">{{pet.apelido}}</h1>
+            </div>
+            <div class="row mb-4">
+                <h1 class="h4">{{pet.genero}}</h1>
+            </div>
+            <div class="row mb-4">
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-2" >
+        <p class="col-md-10"></p>
+        <button class="btn btn-success col-md-2" (click)="adotar()">Adotar</button>
+    </div>
+
+    <div *ngIf="querAdotar">
+
+        <div class="row">
+            <div class="form-group">
+                <label for="selecionarPessoa">Selecionar Pessoa</label>
+                <select class="form-control" id="selecionarPessoa" [(ngModel)]="adocao.Pessoa._id">
+                    <option *ngFor="let item of pessoas" value="{{item._id}}">{{item.nome}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <a name="confirmarAdocao" id="confirmarAdocao" class="btn btn-success "
+            (click)="confirmarAdocao(pet._id)">Confirmar</a>
+        </div>
+
+    </div>
+
+</div>

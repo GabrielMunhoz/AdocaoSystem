@@ -17,7 +17,7 @@ const pessoaSchema = new mongoose.Schema({
         default: 'basic',
         enum: ["basic", "admin"]
        },    
-    dadosAdotante: { type: Schema.Types.ObjectId, ref: 'DadosAdotantes' }
+    endereco: { type: Schema.Types.ObjectId, ref: 'endereco' }
 },
     {
         versionKey: false

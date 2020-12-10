@@ -1,9 +1,28 @@
-<div class="container">
-    <div class="card" *ngFor="let pet of pets">
-        <div class="card-body">
-            <img src="#" alt="Imagem do pet">
-            <h5 class="card-title">{{pet.nome}}</h5>
-            <p class="card-text">{{pet.idade}}</p>
-        </div>
+<div class="row mb-2">
+    <div class="col-sm-3">
+    <div class="col-sm"></div>
+    <div class="col-sm"></div>
+    <div class="col-sm">
+      <input class="form-control mr-sm-2" type="search" (keydown)="pesquisarPet($event.target.value)" placeholder="Pesquisa" aria-label="Pesquisar">
     </div>
-</div>
+    </div>
+  </div>
+  
+  <div *ngIf="!pets">Listando os pets.....</div>
+  <div class="container" *ngIf="pets">
+    <div class="row">
+      <div class="col-md-4 mb-2" *ngFor="let p of pets | filtroAdotados">
+        <a (click)="abrirPet(p._id)" style="cursor:pointer;">
+          <div class="card">
+            <img class="card-top" src="https://veja.abril.com.br/wp-content/uploads/2016/05/gato-fofo-20142401-original1.jpeg?quality=70&strip=info&resize=680,453" style="width:200px; height:200px;" />
+            <div class="card-body">
+              <h5 class="card-title"> {{p.apelido}}</h5>
+              <div class="card-text"> {{p.genero}}</div>
+              <!--<h5 class="h5"><span>R${{p.price | number:2}}</span></h5>-->
+              <h5 class="h5">Idade :{{p.idade | idadeCachorro:4 }}</h5>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>

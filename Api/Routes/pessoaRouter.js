@@ -8,7 +8,7 @@ const dadosAdotantesController = require('../Controller/dadosAdotantesController
 const enderecosController = require('../Controller/enderecosController');
 
 
-router.get('/', app.verifyJWT ,pessoaController.grantAccess('readAny', 'pessoa'), pessoaController.listar);
+router.get('/pessoas', app.verifyJWT ,pessoaController.grantAccess('readAny', 'pessoa'), pessoaController.listar);
 router.post('/',app.verifyJWT, pessoaController.grantAccess('createAny', 'pessoa'),pessoaController.inserir);
 router.post('/login', pessoaController.login);
 router.get('/logout' ,pessoaController.logout);
@@ -16,6 +16,17 @@ router.put('/:id' ,app.verifyJWT,pessoaController.grantAccess('updateAny', 'pess
 router.get('/:id',app.verifyJWT, pessoaController.listarId);
 router.delete('/:id',app.verifyJWT , pessoaController.grantAccess('deleteAny', 'pessoa'),pessoaController.deletar);
 
+
+// Endereco
+
+router.get("/", app.verifyJWT , enderecosController.grantAccess('readAny', 'endereco'), enderecosController.listar);
+router.post('/enderecos/',app.verifyJWT, enderecosController.grantAccess('createAny', 'endereco') , enderecosController.inserir);
+router.put('/enderecos/:id' ,app.verifyJWT, enderecosController.grantAccess('updateAny', 'endereco'), enderecosController.atualizar);
+router.get('/enderecos/:id',app.verifyJWT, enderecosController.listarId);
+router.delete('/enderecos/:id',app.verifyJWT ,enderecosController.grantAccess('deleteAny', 'endereco'), enderecosController.deletar);
+
+
+//
 
 // Dados Adotantes
 
@@ -27,15 +38,6 @@ router.delete('/dadosAdotantes/:id',app.verifyJWT , dadosAdotantesController.del
 
 //
 
-// Endereco
 
-router.get('/enderecos/', app.verifyJWT , pessoaController.grantAccess('readAny', 'endereco'), enderecosController.listar);
-router.post('/enderecos/',app.verifyJWT, pessoaController.grantAccess('createAny', 'endereco') , enderecosController.inserir);
-router.put('/enderecos/:id' ,app.verifyJWT, pessoaController.grantAccess('updateAny', 'endereco'), enderecosController.atualizar);
-router.get('/enderecos/:id',app.verifyJWT, enderecosController.listarId);
-router.delete('/enderecos/:id',app.verifyJWT ,pessoaController.grantAccess('deleteAny', 'endereco'), enderecosController.deletar);
-
-
-//
 
 module.exports = router;
